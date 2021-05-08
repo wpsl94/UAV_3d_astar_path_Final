@@ -4,5 +4,5 @@ Dankook University Mobile Labs. 4STUP.
 
 
 
-Kim Hee Ju <br>Lee Jin Ho<br>Jeong Jun Seo<br>Park Seo Yoon
+Kim Hee Ju <br>Lee Jin Ho<br>Jeong Jun Seo<br>Park Seo Yun
 
