@@ -1,0 +1,2 @@
+F:\글로벌\Astar-for-Unity-master\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+F:\글로벌\Astar-for-Unity-master\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
