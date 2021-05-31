@@ -8,7 +8,7 @@ namespace GridMaster
     public class GridBase : MonoBehaviour
     {
         private int isFirst = 0;
-
+        public float Y_down_offset;
         public LineRenderer linerederer_Recommend;//라인렌더러 저장할 변수
         public LineRenderer linerederer_Shortest;//라인렌더러 저장할 변수
 
@@ -31,7 +31,7 @@ namespace GridMaster
         public Vector3 endNodePosition;
         public Vector3 midNodePosition2;
         private Vector3 realStartPosition;
-
+        private Vector3 tmp;
         public int agents;
 
         void Start()
@@ -95,6 +95,7 @@ namespace GridMaster
         public bool start;
         void Update()
         {
+            if ((endNodePosition.x - 1 <= Drone.transform.position.x && Drone.transform.position.x <= endNodePosition.x + 1) && (endNodePosition.y -1 <= Drone.transform.position.y && Drone.transform.position.y <= endNodePosition.y + 1) && (endNodePosition.z - 1 <= Drone.transform.position.z && Drone.transform.position.z <= endNodePosition.z + 1)) linerederer_Recommend.enabled = false;
             if (isFirst == 0)
             {
                 startNodePosition = Drone.transform.position;
@@ -161,7 +162,7 @@ namespace GridMaster
                 //path.startPosition = startNode;
                 //path.endPosition = end;
                 //for문돌려서 0층~꼭대기층까지 position 계산한 걸 getnodefromvector3로 node로 바꾸고 해당 노드를 true로 바꾼다
-                /*
+                
                 for (int tmpY = 0; tmpY < maxY; tmpY++)
                 {
                     for(int tmpX = 0; tmpX < maxX; tmpX++)
@@ -174,11 +175,11 @@ namespace GridMaster
                         }
                     }
                 }
-                */
+                
                 //find the path
                 //List<Node> p = path.FindPath();
                 //startNode.worldObject.SetActive(false);
-
+                
                 for (int i = 0; i < agents; i++)
                 {
                     //Pathfinding.PathfindMaster.GetInstance().RequestPathfind(startNode, end, ShowPath);
@@ -198,10 +199,12 @@ namespace GridMaster
             path.Insert(0, GetNodeFromVector3(realStartPosition));
             */
             linerederer_Shortest.positionCount = 0;
+            //tmp = realStartPosition;
+            //tmp.y = tmp.y - Y_down_offset;
             path.Insert(0, GetNodeFromVector3(realStartPosition));
 
             Vector3 maxHeight = realStartPosition;
-            maxHeight.y = maxY - 1;
+            //maxHeight.y = maxY - 1-Y_down_offset;
             path.Insert(1, GetNodeFromVector3(maxHeight));
 
 
@@ -211,18 +214,21 @@ namespace GridMaster
                 v3.x = n.x;
                 v3.y = n.y;
                 v3.z = n.z;
+                v3.y = v3.y - Y_down_offset;
                 linerederer_Shortest.positionCount = linerederer_Shortest.positionCount + 1; //라인렌더러 포지션 값이 호출되면 포지션 카운트 값을 1씩 증가시킨다.
                 linerederer_Shortest.SetPosition(linerederer_Shortest.positionCount - 1, v3);
                 n.worldObject.SetActive(false);
 
             }
             maxHeight = endNodePosition;
-            maxHeight.y = maxY - 1;
+            maxHeight.y = maxY - 1-Y_down_offset;
             linerederer_Shortest.positionCount = linerederer_Shortest.positionCount + 1; //라인렌더러 포지션 값이 호출되면 포지션 카운트 값을 1씩 증가시킨다.
             linerederer_Shortest.SetPosition(linerederer_Shortest.positionCount - 1, maxHeight);
 
+            tmp = endNodePosition;
+            tmp.y = tmp.y - Y_down_offset;
             linerederer_Shortest.positionCount = linerederer_Shortest.positionCount + 1; //라인렌더러 포지션 값이 호출되면 포지션 카운트 값을 1씩 증가시킨다.
-            linerederer_Shortest.SetPosition(linerederer_Shortest.positionCount - 1, endNodePosition);
+            linerederer_Shortest.SetPosition(linerederer_Shortest.positionCount - 1, tmp);
 
             
             //Debug.Log("agent complete");
@@ -239,6 +245,8 @@ namespace GridMaster
             path.Insert(1, GetNodeFromVector3(maxHeight));
             */
             linerederer_Recommend.positionCount = 0;
+            //tmp = Drone.transform.position;
+            //tmp.y = tmp.y - Y_down_offset;
             path.Insert(0, GetNodeFromVector3(Drone.transform.position));
 
             Vector3 maxHeight = Drone.transform.position;
@@ -251,6 +259,7 @@ namespace GridMaster
                 v3.x = n.x;
                 v3.y = n.y;
                 v3.z = n.z;
+                v3.y = v3.y - Y_down_offset;
 
                 if ((Math.Abs(endNodePosition.x - n.x) > Math.Abs(endNodePosition.x - Drone.transform.position.x)) && (Math.Abs(endNodePosition.z - n.z) > Math.Abs(endNodePosition.z - Drone.transform.position.z)))
                     continue;
@@ -261,12 +270,14 @@ namespace GridMaster
 
             }
             maxHeight = endNodePosition;
-            maxHeight.y = maxY - 1;
+            maxHeight.y = maxY - 1-Y_down_offset;
             linerederer_Recommend.positionCount = linerederer_Recommend.positionCount + 1; //라인렌더러 포지션 값이 호출되면 포지션 카운트 값을 1씩 증가시킨다.
             linerederer_Recommend.SetPosition(linerederer_Recommend.positionCount - 1, maxHeight);
 
+            tmp = endNodePosition;
+            tmp.y = tmp.y - Y_down_offset;
             linerederer_Recommend.positionCount = linerederer_Recommend.positionCount + 1; //라인렌더러 포지션 값이 호출되면 포지션 카운트 값을 1씩 증가시킨다.
-            linerederer_Recommend.SetPosition(linerederer_Recommend.positionCount - 1, endNodePosition);
+            linerederer_Recommend.SetPosition(linerederer_Recommend.positionCount - 1, tmp);
 
 
             //Debug.Log("agent complete");

@@ -128,23 +128,26 @@ namespace Pathfinding
                 }
             }
             //txt 파일 없으면 새로 생성
+            /*
             if (false == File.Exists(filePath))
             {
                 var file_write = File.CreateText(filePath2 + ".txt");
                 file_write.Close();
             }
             StreamWriter sw;
-            sw = File.AppendText(filePath);
+            sw = File.AppendText(filePath);*/
            // FileStream file_read = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             //StreamReader sr = new StreamReader(file_read);
-            string str = null;
+            //string str = null;
             //직각으로 올라가기 전의 맨 처음 시작 지점 txt 파일에 추가
+            /*
             tmpPath = gridBase.startNodePosition.x.ToString() + "," + gridBase.startNodePosition.y.ToString() + "," + gridBase.startNodePosition.z.ToString();
             sw.WriteLine(tmpPath);
-            sw.Flush();
+            sw.Flush();*/
             //we return the path at the end
+            /*
             foreach (Node cell in foundPath)
-            {/*
+            {
                 str = sr.ReadLine();
                 if (str.Length != 0)
                 {
@@ -160,7 +163,7 @@ namespace Pathfinding
                     values = null;
                     str = null;
                 }
-                */
+                
                 tmpPath = cell.x.ToString() + "," + cell.y.ToString() + "," + cell.z.ToString();
                 sw.WriteLine(tmpPath);
                 sw.Flush();
@@ -171,7 +174,7 @@ namespace Pathfinding
             sw.WriteLine(tmpPath);
             sw.Flush();
            // sr.Close();
-            sw.Close();
+            sw.Close();*/
             return foundPath;
         }
 
